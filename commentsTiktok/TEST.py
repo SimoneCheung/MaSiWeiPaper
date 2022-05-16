@@ -1,4 +1,5 @@
 import re
+import pandas as pd
 pattern = re.compile(r'\d+')
 
 liebiao=[]
@@ -14,13 +15,15 @@ liebiao=[]
    #print (line)
 
 
-f = open ('data.txt','r',encoding='utf-8') # This file is to store all the links of songs, such as "/cny216829x11x1.htm"
+f = open ('commentsTiktok.txt','r',encoding='utf-8') # This file is to store all the links of songs, such as "/cny216829x11x1.htm"
 lines = f.readlines() # Read all the lines from the file
 for line in lines:
-    line1=line.strip()
-    #print(re.match('展开'+r'\d+'+'条回复',line1))
-    zhankai=re.match('展开'+r'\d+'+'条回复',line1)
-    if zhankai != None:
-        liebiao= liebiao + [zhankai]
+    line1=line.strip().split('ß')
+    liebiao.append(line1)
+    save = pd.DataFrame(columns=['ID头像','ID','time','...','content','like','回复','reply'], index = None, data=list(liebiao))
+    fh=open(r'jieguo.csv','w+')
+    #zhankai=re.match('展开'+r'\d+'+'条回复',line1)
+    #if zhankai != None:
+    #    liebiao= liebiao + [zhankai]
 f.close()
-print (liebiao)
+#print (liebiao)
